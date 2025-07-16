@@ -1,24 +1,26 @@
-import { useDate } from "../Context/DateProvider";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import {
+  goToPreviousWeek,
+  goToNextWeek,
+  goToToday,
+} from "../store/slices/dateSlice";
+import { formatDate } from "../utils/dateUtils";
 
 export default function Header() {
-  const {
-    currentDate,
-    goToNextWeek,
-    goToPreviousWeek,
-    goToToday,
-    formatDate,
-  } = useDate();
+  const dispatch = useAppDispatch();
+  const currentDateString = useAppSelector((state) => state.date.currentDate);
+  const currentDate = new Date(currentDateString);
 
   const handleTodayClick = () => {
-    goToToday();
-  }
+    dispatch(goToToday());
+  };
 
   const handleLeftArrowClick = () => {
-    goToPreviousWeek();
-  }
+    dispatch(goToPreviousWeek());
+  };
   const handleRightArrowClick = () => {
-    goToNextWeek();
-  }
+    dispatch(goToNextWeek());
+  };
 
   return (
     <header className="header-container row">
@@ -43,10 +45,15 @@ export default function Header() {
 
       <div className="header-second-part row">
         <div className="after-logo-first-part row">
-          <button className="button-header" onClick={handleTodayClick}>Today</button>
+          <button className="button-header" onClick={handleTodayClick}>
+            Today
+          </button>
 
           <div className="arrows-container row">
-            <div className="arrow-container-big cursor-pointer left-header-arrow" onClick={handleLeftArrowClick}>
+            <div
+              className="arrow-container-big cursor-pointer left-header-arrow"
+              onClick={handleLeftArrowClick}
+            >
               <img
                 src="/icons/arrowLeft.svg"
                 alt="Arrow left icon"
@@ -54,7 +61,10 @@ export default function Header() {
               />
             </div>
 
-            <div className="arrow-container-big cursor-pointer right-header-arrow" onClick={handleRightArrowClick}>
+            <div
+              className="arrow-container-big cursor-pointer right-header-arrow"
+              onClick={handleRightArrowClick}
+            >
               <img
                 src="/icons/arrowRight.svg"
                 alt="Arrow right icon"

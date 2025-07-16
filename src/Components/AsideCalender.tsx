@@ -1,12 +1,12 @@
-import { useDate } from "../Context/DateProvider";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { goToPreviousMonth, goToNextMonth } from "../store/slices/dateSlice";
+import { formatDate } from "../utils/dateUtils";
 
 export default function AsideCalender() {
-  const {
-    currentDate,
-    goToPreviousMonth,
-    goToNextMonth,
-    formatDate,
-  } = useDate();
+  const dispatch = useAppDispatch();
+
+  const currentDateString = useAppSelector((state) => state.date.currentDate)
+  const currentDate = new Date(currentDateString);
 
   const daysToShow = getDaysToShow(currentDate);
 
@@ -21,11 +21,11 @@ export default function AsideCalender() {
   };
 
   const handleLeftArrowClick = () => {
-    goToPreviousMonth();
+    dispatch(goToPreviousMonth());
   }
 
   const handleRightArrowClick = () => {
-    goToNextMonth();
+    dispatch(goToNextMonth());
   }
 
   return (
