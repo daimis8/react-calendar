@@ -14,25 +14,24 @@ interface VisualEvent {
 }
 
 interface CalendarEvent {
-    id: number;
-    title: string;
-    date: string;
-    startTime: string;
-    endTime: string;
-    description: string;
-    dayIndex: number;
-    top: number;
-    height: number;
-    left: number;
-    width: number;
-  }
+  id: number;
+  title: string;
+  date: string;
+  startTime: string;
+  endTime: string;
+  description: string;
+  dayIndex: number;
+  top: number;
+  height: number;
+  left: number;
+  width: number;
+}
 
 export default function CalenderBody() {
   const dispatch = useAppDispatch();
   const currentDateString = useAppSelector((state) => state.date.currentDate);
   const currentDate = new Date(currentDateString);
   const events = useAppSelector((state) => state.events.items);
-  console.log(events);
 
   const overlayRef = useRef<HTMLDivElement>(null);
   const [visualEvent, setVisualEvent] = useState<VisualEvent | null>(null);
@@ -85,27 +84,31 @@ export default function CalenderBody() {
 
   const getWeekEvents = (): CalendarEvent[] => {
     const weekDates = getWeekDates();
-    const weekStrings = weekDates.map(date => date.toISOString().split('T')[0]);
-    
+    const weekStrings = weekDates.map(
+      (date) => date.toISOString().split("T")[0]
+    );
+
     const overlayElement = overlayRef.current;
     if (!overlayElement) return [];
-    
-    const rect = overlayElement.getBoundingClientRect();
-    const dayWidth = rect.width / 7;
-    const hourHeight = rect.height / 24;
+
+    // const rect = overlayElement.getBoundingClientRect();
+    // const dayWidth = rect.width / 7;
+    // const hourHeight = rect.height / 24;
+    const dayWidth = 225;
+    const hourHeight = 50;
 
     return events
-      .filter(event => weekStrings.includes(event.date))
-      .map(event => {
+      .filter((event) => weekStrings.includes(event.date))
+      .map((event) => {
         const dayIndex = weekStrings.indexOf(event.date);
-        
-        const [startHour, startMin] = event.startTime.split(':').map(Number);
-        const [endHour, endMin] = event.endTime.split(':').map(Number);
-        
+
+        const [startHour, startMin] = event.startTime.split(":").map(Number);
+        const [endHour, endMin] = event.endTime.split(":").map(Number);
+
         const startDecimal = startHour + startMin / 60;
         const endDecimal = endHour + endMin / 60;
         const durationHours = endDecimal - startDecimal;
-        
+
         return {
           ...event,
           dayIndex,
@@ -144,7 +147,7 @@ export default function CalenderBody() {
       setVisualEvent(null);
     }
   }, [isModalOpen]);
-  
+
   const createEventAtPosition = (
     dayCol: number,
     hour: number,
@@ -153,9 +156,12 @@ export default function CalenderBody() {
     const overlayElement = overlayRef.current;
     if (!overlayElement) return;
 
-    const rect = overlayElement.getBoundingClientRect();
-    const dayWidth = rect.width / 7;
-    const hourHeight = rect.height / 24;
+    // const rect = overlayElement.getBoundingClientRect();
+    // const dayWidth = rect.width / 7;
+    // const hourHeight = rect.height / 24;
+
+    const dayWidth = 225;
+    const hourHeight = 50;
 
     const newEvent: VisualEvent = {
       dayCol,
@@ -217,7 +223,7 @@ export default function CalenderBody() {
             key={event.id}
             className="calendar-event"
             style={{
-              position: 'absolute',
+              position: "absolute",
               left: `${event.left}px`,
               top: `${event.top}px`,
               width: `${event.width}px`,
@@ -228,7 +234,6 @@ export default function CalenderBody() {
             }}
           >
             {event.title}
-
           </div>
         ))}
 

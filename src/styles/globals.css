@@ -58,14 +58,6 @@ body {
   padding-left: 16px;
 }
 
-.icon-container {
-  width: 48px;
-  height: 48px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .menu-icon {
   width: 28px;
   height: 28px;
@@ -301,16 +293,17 @@ aside {
   overflow-y: auto;
   min-width: 1400px;
   padding-bottom: 10px;
+  overflow-x: auto;
 }
 
 .overlay {
   position: absolute;
   top: 0;
   left: 69px;
-
   width: calc(7 * 225px);
   height: calc(24 * 50px);
   pointer-events: auto;
+  overflow-x: hidden;
 
   z-index: 15;
 }
@@ -346,7 +339,7 @@ aside {
   border: 1px orange solid;
   padding: 4px;
   font-size: 10px;
-  overflow: hidden;
+  overflow-x: auto;
   cursor: pointer;
   z-index: 15;
 }
@@ -357,7 +350,7 @@ aside {
   grid-template-columns:
     minmax(51px, 60px)
     minmax(7px, 9px)
-    repeat(7, minmax(190px ,225px));
+    repeat(7, 225px);
   grid-template-rows: repeat(24, 50px);
 }
 
@@ -494,12 +487,6 @@ aside {
 .close-icon-container:hover {
   background-color: rgba(227, 227, 227, 0.2);
 }
-
-.close-icon {
-  width: 20px;
-  height: 20px;
-}
-
 /* FORM STYLING */
 
 .form-container {
